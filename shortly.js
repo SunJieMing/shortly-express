@@ -28,6 +28,10 @@ function(req, res) {
   res.render('index');
 });
 
+app.get('/login', function(req, res) {
+    res.render('login');
+});
+
 app.get('/create', 
 function(req, res) {
   res.render('index');
@@ -38,6 +42,49 @@ function(req, res) {
   Links.reset().fetch().then(function(links) {
     res.send(200, links.models);
   });
+});
+
+var generateSessionId = function(){
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for( var i=0; i < 10; i++ )
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return text;
+}
+
+var generateSaltId = function(){
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < 50; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+};
+
+app.post('/login', function(req, res){
+  var username = req.body.username;
+  var password = req.body.password;
+
+  var salt = generateSaltId();
+  new User({username: 'ben', password: 'password', salt: salt});
+
+  new User({username: username, password: password}).fetch().then(function(found) {
+    if(!found){
+      res.send(200, 'You entered an incorrect name or password.');
+    } else {
+      var sessionId = generateSessionId();
+      req.session.regenerate
+      res.send(200, sessionId);
+    }
+  })
+
+
+  console.log(username, password, salt, '--------------------');
+
+
 });
 
 app.post('/links', 
