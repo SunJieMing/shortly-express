@@ -11,7 +11,7 @@ var Links = require('./app/collections/links');
 var Link = require('./app/models/link');
 var Click = require('./app/models/click');
 
-var app = express();
+var app = express();  
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -42,6 +42,7 @@ function(req, res) {
 
 app.post('/links', 
 function(req, res) {
+  //console.log(req.body.url);
   var uri = req.body.url;
 
   if (!util.isValidUrl(uri)) {
@@ -80,6 +81,9 @@ function(req, res) {
 
 
 
+
+
+
 /************************************************************/
 // Handle the wildcard route last - if all other routes fail
 // assume the route is a short code and try and handle it here.
@@ -108,5 +112,5 @@ app.get('/*', function(req, res) {
   });
 });
 
-console.log('Shortly is listening on 4568');
-app.listen(4568);
+console.log('Shortly is listening on 3000');
+app.listen(3000);
