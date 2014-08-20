@@ -36,28 +36,9 @@ app.use(session({
   secret: 'wodemimi'
 }));
 
-// function restrict(req, res, next) {
-//   if (req.session.user) {
-//     next();
-//   } else {
-//     req.session.error = 'Access denied!';
-//     res.redirect('/login');
-//   }
-// }
 
 app.get('/', util.checkUser, function(req, res){
-
-//.loggedIn(? set it to whatever)
-
-// if(req.session.??? === true){
-//These two lines of code are identical.
-
-  //this is now being tested in util.checkUser;
-  // if(!util.isLoggedIn(req)){
-  //   res.redirect('/login');
-  // } else {
-    res.render('index');
-  // }
+  res.render('index');
 });
 
 
@@ -93,23 +74,10 @@ app.post('/login', function(req, res){
           res.redirect('/login');
         }
       })
-      // req.session.regenerate
-      // res.render('index');
-      // res.send(200, 'Hello!');
+
     }
   });
 
- //  if(username == 'demo' && password == 'demo'){
- //    request.session.regenerate(function(){
- //      request.session.user = username;
- //      response.redirect('/restricted');
- //    });
- //  }
- //  else {
- //   res.redirect('login');
- // }
-
- //console.log(username, password, '--------------------');
 });
 
 app.get('/logout', function(req, res){
@@ -117,26 +85,6 @@ app.get('/logout', function(req, res){
     res.redirect('/');
   });
 });
-
-// app.post('/login', function(request, response) {
-
-//   var username = request.body.username;
-//   var password = request.body.password;
-//   var salt = bcrypt.genSaltSync(10);
-//   var hash = bcrypt.hashSync(password, salt);
-//   var userObj = db.users.findOne({ username: username, password: hash });
-
-//   if(userObj){
-//     request.session.regenerate(function(){
-//       request.session.user = userObj.username;
-//       response.redirect('/home');
-//     });
-//   }
-//   else {
-//     res.redirect('signup');
-//   }
-
-// });
 
 
 
@@ -163,14 +111,7 @@ app.post('/signup', function(req, res){
     }
   })
 
-  // user.save().then(function(newUser){
-  //   Users.add(newUser);
-  //   console.log('USERS-----------', Users.models)
-  //   res.send(200, newUser);
-  // })
 
-  // res.send(200, user);
-  //console.log('you signed up!');
 });
 
 
